@@ -1,5 +1,4 @@
 {
-    "secretpassphrase" : "fortest", 
-    "isNewFirst" : "true", 
+    "secretpassphrase" : "fortest",
     "OpenPort" : "3333"
 }
