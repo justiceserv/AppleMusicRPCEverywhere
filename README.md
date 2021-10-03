@@ -1,5 +1,5 @@
 <p align = "center">
-    <img src="./readmeimages/새%20프로젝트-2.png" width = 30%>
+    <img src="./readmeimages/새%20프로젝트-2.png" width = 20%>
 </p>
 
 # AppleMusicRPCEverywhere
