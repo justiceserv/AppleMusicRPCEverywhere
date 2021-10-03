@@ -1,18 +1,18 @@
-const searchItunes = require('@tbogard/itunes-search')
-const genre = require('./getGenreAssets')
+const { searchSong } = require('@tbogard/itunes-search');
+const genre = require('./getGenreAssets');
 const exported = module.exports = {};
 
-exported.mobilerpcchange = function (title, album, client) {
+exported.mobilerpcchange = function(title, album, client){
     var artist = album.substring(album.indexOf('-') - 1)
     var album1 = album.substring(album.indexOf('-') + 2, album.length)
-    searchItunes(`${artist} - ${title}`).then((result) => {
+    searchSong(`${artist} - ${title}`).then((result) => {
         if (!result.results[0].trackViewUrl) {
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
                 activity:
                 {
                     details: `Playing ${title}`,
-                    state: `Album ${album1}`,
+                    state: `Album: ${album1}`,
                     timestamps:
                     {
                         start: Date.now(),
@@ -38,7 +38,7 @@ exported.mobilerpcchange = function (title, album, client) {
                 activity:
                 {
                     details: `Playing ${title}`,
-                    state: `Album ${album1}`,
+                    state: `Album: ${album1}`,
                     timestamps:
                     {
                         start: Date.now(),
@@ -59,18 +59,17 @@ exported.mobilerpcchange = function (title, album, client) {
             })
         }
     })
+};
 
-}
-
-exported.pcrpcchange = function (title, artist, album, genre, remainingTime, client) {
-    searchItunes(`${artist} - ${title}`).then((result) => {
+exported.pcrpcchange = function(title, artist, album, genre, remainingTime, client){
+    searchSong(`${artist} - ${title}`).then((result) => {
         if(!result.results[0].trackViewUrl) {
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
                 activity:
                 {
                     details: `Playing ${title}`,
-                    state: `Album ${album}`,
+                    state: `Album: ${album}`,
                     timestamps:
                     {
                         end: Date.now() + remainingTime * 1000,
@@ -96,7 +95,7 @@ exported.pcrpcchange = function (title, artist, album, genre, remainingTime, cli
                 activity:
                 {
                     details: `Playing ${title}`,
-                    state: `Album ${album}`,
+                    state: `Album: ${album}`,
                     timestamps:
                     {
                         end: Date.now() + remainingTime * 1000,
@@ -117,4 +116,9 @@ exported.pcrpcchange = function (title, artist, album, genre, remainingTime, cli
             })
         }
     })
+}
+
+exported.rpcstop = function(client) {
+    client.request('SET_ACTIVITY', {pid: process.pid}); 
+    console.log('RPC stopped.')
 }

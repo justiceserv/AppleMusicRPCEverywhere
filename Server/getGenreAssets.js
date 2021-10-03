@@ -1,29 +1,32 @@
-var exports = module.exports = {};
+var exports1 = module.exports = {};
 
-exports.pcgetGenreAssets = function (album, genreinput, artist) {
-    var temp = genreinput.toLowerCase();
-    var iualbumdata = require('./datas/iualbums.json')
-    if (artist.includes('IU')) {
-        if(!album || !iualbumdata[album]) {
-            return 'iudefault'
+exports1.pcgetGenreAssets = function (album, genreinput, artist) {
+    try {
+        var temp = genreinput.toLowerCase();
+        var iualbumdata = require('./datas/iualbums.json')
+        if (artist.includes('IU')) {
+            if (!album || !iualbumdata[album]) {
+                return 'iudefault'
+            }
+            console.log(iualbumdata[album])
+            return iualbumdata[album]
         }
-        console.log(iualbumdata[album])
-        return iualbumdata[album]
+        else { return switchGenre(temp) }
     }
-    else { return switchGenre(temp) }
-}
+    catch(Exception) {console.log(Exception)}
+};
 
-exports.mobilegetGenreAssets = function (album, artist) {
+exports1.mobilegetGenreAssets = function (album, artist) {
     var iualbumdata = require('./datas/iualbums.json')
     if (artist.includes('IU')) {
-        if(!album || !iualbumdata[album]) {
+        if (!album || !iualbumdata[album]) {
             return 'iudefault'
         }
         console.log(iualbumdata[album])
         return iualbumdata[album]
     }
     else { return switchGenre('') }
-}
+};
 
 function switchGenre(genrelower) {
     var albumdata = require('./datas/genre.json')
@@ -34,4 +37,4 @@ function switchGenre(genrelower) {
         console.log(albumdata[genrelower])
         return albumdata[genrelower]
     }
-}
+};

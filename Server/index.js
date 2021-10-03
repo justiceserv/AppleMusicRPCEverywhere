@@ -20,18 +20,29 @@ const server = http.createServer((request, response) => {
             response.end('Invalid')
         }
     }
-    else if(path === 'newrpc') {
+    else if(path === '/pauserpc') {
+        var data = ""
+        request.on('data', function(chunk) {
+            data += chunk;
+        })
+        request.on('end', function() {
+            var reqJson = JSON.parse(data) 
+            if(reqJson['secretKey'] === configuration.secretpassphrase) {}
+        })
+    }
+    else if(path === '/newrpc') {
         var data = ""
         request.on('data', function (chunk) {
             data += chunk; 
         })
         request.on('end', function(){
             try{
-                var reqJson = JSON.parase(data); 
-                if(!reqJson.name || !reqJson.album) { console.log("Client sent wrong information.") }
-                else if(!reqJson.elapsedTime) { rpcchange.mobilerpcchange(reqJson.name, reqJson.album, client) }
-                else { rpcchange.pcrpcchange(reqJson.name, reqJson.artist, reqJson.album, reqJson.genre, reqJson.remainingTime, client)}
-            }catch(Exception) { console.log("Client sent wrong information.") }
+                var reqJson = JSON.parse(data); 
+                console.log(reqJson)
+                if(!reqJson['name'] || !reqJson['album'] || reqJson['secretKey'] != configuration.secretpassphrase) { console.log("Client sent wrong information.") }
+                else if(!reqJson['remainingTime']) { rpcchange.mobilerpcchange(reqJson['name'], reqJson['album'], client) }
+                else { rpcchange.pcrpcchange(reqJson['name'], reqJson['artist'], reqJson['album'], reqJson['genre'], reqJson['remainingTime'], client)}
+            }catch(Exception) { console.log(Exception) }
         })
     }
     else {
