@@ -1,0 +1,5 @@
+{
+    "serverip" : "localhost", 
+    "serverport" : "3333",
+    "secretpass" : "fortest"
+}
