@@ -61,9 +61,12 @@ exported.mobilerpcchange = function(title, album, client){
     })
 };
 
-exported.pcrpcchange = function(title, artist, album, genre, remainingTime, client){
+exported.pcrpcchange = function(title, artist, album, genreinput, remainingTime, client){
+    // var test = genre.pc(album, genreinput, artist);
+    // console.log(test)
     searchSong(`${artist} - ${title}`).then((result) => {
         if(!result.results[0].trackViewUrl) {
+            
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
                 activity:
@@ -75,8 +78,9 @@ exported.pcrpcchange = function(title, artist, album, genre, remainingTime, clie
                         end: Date.now() + remainingTime * 1000,
                     },
                     assets:
-                    {
-                        large_image: genre.pcgetGenreAssets(album, genre, artist),
+                    {    
+                      
+                        large_image: genre.pc(album, genreinput, artist),
                         large_text: `Made by Justiceserv's AppleMusicRPCEverywhere`,
                         small_image: `applemusic`,
                         small_text: 'https://jserv.xyz/',
@@ -102,7 +106,7 @@ exported.pcrpcchange = function(title, artist, album, genre, remainingTime, clie
                     },
                     assets:
                     {
-                        large_image: genre.pcgetGenreAssets(album, genre, artist),
+                        large_image: genre.pc(album, genreinput, artist),
                         large_text: `Made by Justiceserv's AppleMusicRPCEverywhere`,
                         small_image: `applemusic`,
                         small_text: 'https://jserv.xyz/',

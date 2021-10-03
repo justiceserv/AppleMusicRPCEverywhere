@@ -1,6 +1,6 @@
-var exports1 = module.exports = {};
+// var exports1 = module.exports = {};
 
-exports1.pcgetGenreAssets = function (album, genreinput, artist) {
+exports.pc = function (album, genreinput, artist) {
     try {
         var temp = genreinput.toLowerCase();
         var iualbumdata = require('./datas/iualbums.json')
@@ -16,7 +16,7 @@ exports1.pcgetGenreAssets = function (album, genreinput, artist) {
     catch(Exception) {console.log(Exception)}
 };
 
-exports1.mobilegetGenreAssets = function (album, artist) {
+exports.mobilegetGenreAssets = function (album, artist) {
     var iualbumdata = require('./datas/iualbums.json')
     if (artist.includes('IU')) {
         if (!album || !iualbumdata[album]) {
