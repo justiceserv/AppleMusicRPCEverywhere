@@ -1,6 +1,6 @@
 const searchItunes = require('@tbogard/itunes-search')
 const genre = require('./getGenreAssets')
-const exported = module.exports = [];
+const exported = module.exports = {};
 
 exported.mobilerpcchange = function (title, album, client) {
     var artist = album.substring(album.indexOf('-') - 1)
